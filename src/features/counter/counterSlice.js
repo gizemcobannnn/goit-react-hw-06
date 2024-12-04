@@ -28,3 +28,42 @@ export const counterSlice = createSlice({
 export const { increment, decrement, incrementByAmount } = counterSlice.actions
 
 export default counterSlice.reducer
+
+//actions store a data gonderir ornek
+
+import { createAction } from "@reduxjs/toolkit";
+export const addTask = createAction("tasks/addTask");
+console.log(setStatusFilter("hello"));
+// { type: "filters/setStatusFilter", payload: "hello" }
+
+const reduxAction = {
+  type: "Action type",
+  payload: "Payload value",
+};
+const addTask = {
+  type: "tasks/addTask",
+  payload: {
+    id: "Unique id",
+    text: "User entered text",
+    completed: false,
+  },
+};
+
+const deleteTask = {
+  type: "tasks/deleteTask", //tasks veya filters)
+  payload: "Task id",
+};
+
+const toggleCompleted = {
+  type: "tasks/toggleCompleted",
+  payload: "Task id",
+};
+
+const setStatusFilter = {
+  type: "filters/setStatusFilter",
+  payload: "Filter value",
+};
+
+//Dispatch
+// Hook içe aktarıyoruz
+import { useDispatch } from "react-redux";
