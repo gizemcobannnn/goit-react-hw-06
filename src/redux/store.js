@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import counterReducer from '../features/counter/counterSlice'
+import contactsReducer from './contactsSlice'
+import filtersReducers from './filtersSlice';
 
 const initialState = {
   contacts: {
@@ -18,53 +19,10 @@ const initialState = {
 };
 // src/redux/store.js
 
-const contactReducer = (state = initialState.contacts, action) => {
-  switch (action.type) {
-    case 'contacts/addContact': {
-      return {
-        ...state,
-        items: [...state.items, action.payload],
-      };
-    }
-
-    case 'contacts/deleteContact':
-      return {
-        ...state,
-        items: state.items.filter((task) => task.id !== action.payload),
-      };
-
-      case "contacts/updateContact":
-        return {
-          ...state,
-          items: state.items.map((contact) =>
-            contact.id === action.payload.id
-              ? { ...contact, ...action.payload.data }
-              : contact
-          ),
-        };
-
-
-    default:
-      return state;
-  }
-};
-
-const filtersReducer = (state = initialState.filters, action) => {
-  switch (action.type) {
-    case 'filters/setStatusFilter':
-      return {
-        ...state,
-        status: action.payload,
-      };
-
-    default:
-      return state;
-  }
-};
 
 export const store = configureStore({
   reducer:{
-    contacts:contactReducer,
-    filters: filtersReducer,
+    contacts: contactsReducer, //+
+    filters: filtersReducers, //+
   }
 });

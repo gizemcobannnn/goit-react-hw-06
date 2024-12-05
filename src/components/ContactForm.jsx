@@ -3,8 +3,13 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import PropTypes from "prop-types";
 import Styles from "./ContactForm.module.css"
+import { useDispatch,useSelector } from "react-redux";
+import { addContact,deleteContact,updateContact } from "../redux/contactsSlice";
 
 const ContactForm = ({ onAddContact }) => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.items);
+  
   const nameFieldId = useId();
   const phoneFieldId = useId();
 

@@ -1,18 +1,21 @@
-// src/components/StatusFilter/StatusFilter.jsx
+import {createSlice} from '@reduxjs/toolkit';
 
-  // Hook içe aktarıyoruz
-  import { useSelector } from "react-redux";
+const initialState={
+  name:'',
+}
 
-  export const StatusFilter = () => {
-    // 2. Redux durumundan filtre değerini alıyoruz
-    const filter = useSelector(state => state.filters.status);
-  
-    return (
-      <div>
-        <button>All {filter === "all" && "is active"}</button>
-        <button>Active {filter === "active" && "is active"}</button>
-        <button>Completed {filter === "completed" && "is active"}</button>
-      </div>
-    );
-  };
-  
+export const filtersSlice = createSlice({
+  name:'filters',
+  initialState,
+  reducers:{
+    changeFilter(state,action){
+      state.name = action.payload;
+    }
+  }
+})
+
+export const selectNameFilter = (state) => state.filters.name;
+
+
+export const {changeFilter} = filtersSlice.actions;
+export default filtersSlice.reducer;

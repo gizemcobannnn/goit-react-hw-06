@@ -54,7 +54,7 @@ function App() {
     <div>
       <h1>Phonebook</h1>
       <ContactForm onAddContact={addContact} />
-      <SearchBox searchTerm={searchTerm} onSearch={handleSearch} />
+      <SearchBox  />
       <ContactList
         searchTerm={searchTerm}
         contacts={contacts}

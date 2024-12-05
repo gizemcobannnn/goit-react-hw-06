@@ -1,38 +1,35 @@
-// src/components/TaskList/TaskList.js
+ 
+import { createSlice } from '@reduxjs/toolkit';
 
-  // 1. Hook içe aktarıyoruz
-  import { useSelector } from 'react-redux';
-  import { Task } from '../Task/Task';
+  const initialState = {
+    items: [
+      { id: "id-1", name: "Rosie Simpson", phone: "459-12-56" },
+      { id: "id-2", name: "Hermione Kline", phone: "443-89-12" },
+      { id: "id-3", name: "Eden Clements", phone: "645-17-79" },
+      { id: "id-4", name: "Annie Copeland", phone: "227-91-26" },
+    ],
+  };
   
-  const getVisibleTasks = (tasks, statusFilter) => {
-    switch (statusFilter) {
-      case 'active':
-        return tasks.filter((task) => !task.completed);
-      case 'completed':
-        return tasks.filter((task) => task.completed);
-      default:
-        return tasks;
+  export const contactsSlice=createSlice({
+    name:'contacts',
+    initialState,
+    reducers:{
+      addContact(state,action){
+        state.items.push(action.payload);
+      },
+
+      deleteContact(state,action){
+        state.items= state.items.filter(contact => contact.id !== action.payload);
+      },
+      
+      updateContact(state,action){
+        const index= state.items.findIndex((contact) => contact.id === action.payload.id);
+        if(index !== -1){
+          state.items[index]={...state.items[index],...action.payload}
+        }
+      }
     }
-  };
-  
-  export const TaskList = () => {
-      // 2. Redux durumundan görevler dizisini alıyoruz
-    const tasks = useSelector((state) => state.tasks.items);
-  
-    // 3. Redux durumundan filtre değerini alıyoruz
-    const statusFilter = useSelector((state) => state.filters.status);
-  
-    // 4. Arayüzde görüntülenecek görevlerin dizisini hesaplıyoruz
-    const visibleTasks = getVisibleTasks(tasks, statusFilter);
-  
-    return (
-      <ul className={css.list}>
-        {visibleTasks.map((task) => (
-          <li className={css.listItem} key={task.id}>
-            <Task task={task} />
-          </li>
-        ))}
-      </ul>
-    );
-  };
-  
+  });
+
+  export const {addContact, deleteContact, updateContact} = contactsSlice.actions;
+  export default contactsSlice.reducer;
