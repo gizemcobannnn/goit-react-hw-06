@@ -6,10 +6,10 @@ import Styles from "./ContactForm.module.css"
 import { useDispatch,useSelector } from "react-redux";
 import { addContact,deleteContact,updateContact } from "../redux/contactsSlice";
 
-const ContactForm = ({ onAddContact }) => {
+const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts.items);
-  
+
   const nameFieldId = useId();
   const phoneFieldId = useId();
 
@@ -24,13 +24,23 @@ const ContactForm = ({ onAddContact }) => {
   });
 
   const handleSubmit = (values, { resetForm }) => {
+    const isDuplicate = contacts.some(
+      (contact) =>
+        contact.name.toLowerCase() === values.username.trim().toLowerCase() ||
+        contact.phone === values.phone.trim()
+    );
+
+    if (isDuplicate) {
+      alert("This contact already exists!");
+      return; // Ekleme işlemini durdur
+    }
     const newContact = {
       id: Date.now().toString(),
       name: values.username.trim(),
       phone: values.phone.trim(),
     };
+    dispatch(addContact(newContact));
 
-    onAddContact(newContact); // Parent bileşenine yeni kişiyi gönder
     resetForm(); // Formu sıfırla
   };
 
@@ -79,7 +89,6 @@ const ContactForm = ({ onAddContact }) => {
 };
 
 ContactForm.propTypes = {
-  onAddContact: PropTypes.func.isRequired, // Yalnızca `onAddContact` artık zorunlu
 };
 
 export default ContactForm;

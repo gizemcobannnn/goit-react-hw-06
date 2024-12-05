@@ -3,11 +3,9 @@ import ContactForm from "./components/ContactForm";
 import SearchBox from "./components/SearchBox";
 import ContactList from "./components/ContactList";
 import "./App.css";
-import { useSelector } from "react-redux";
 
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("");
   const [contacts, setContacts] = useState(() => {
     // LocalStorage'dan veri yükleme
     const storedContacts = JSON.parse(localStorage.getItem("personData"));
@@ -39,27 +37,14 @@ function App() {
     } else {
       setContacts((prevContacts) => [...prevContacts, newContact]);
     }
-  };
-
-  const deleteContact = (id) => {
-    const updatedContacts = contacts.filter((contact) => contact.id !== id);
-    setContacts(updatedContacts);
-  };
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
+  }
 
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm onAddContact={addContact} />
+      <ContactForm />
       <SearchBox  />
-      <ContactList
-        searchTerm={searchTerm}
-        contacts={contacts}
-        onDeleteContact={deleteContact}
-      />
+      <ContactList />
     </div>
   );
 }
