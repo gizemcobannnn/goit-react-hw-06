@@ -1,28 +1,34 @@
-import { configureStore } from '@reduxjs/toolkit'
-import contactsReducer from './contactsSlice'
-import filtersReducers from './filtersSlice';
+import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { combineReducers } from 'redux';
+import contactsReducer from './contactsSlice';
+import filtersReducer from './filtersSlice';
 
-const initialState = {
-  contacts: {
-	  items: [
-      { id: "id-1", name: "Rosie Simpson", phone: "459-12-56" },
-      { id: "id-2", name: "Hermione Kline", phone: "443-89-12" },
-      { id: "id-3", name: "Eden Clements", phone: "645-17-79" },
-      { id: "id-4", name: "Annie Copeland", phone: "227-91-26" },
-
-	    { id: 4, text: "Build amazing apps", completed: false },
-	  ]
-  },
-  filters: {
-    status: "all",
-  },
+const persistConfig = {
+  key: 'root',
+  storage,
 };
-// src/redux/store.js
+
+const rootReducer = combineReducers({
+  contacts: contactsReducer,
+  filters: filtersReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 
 export const store = configureStore({
-  reducer:{
-    contacts: contactsReducer, //+
-    filters: filtersReducers, //+
-  }
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // ignore redux-persist actions
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+        // ignore specific paths in state
+        ignoredPaths: ['_persist'],
+      },
+    }),
 });
+
+export const persistor = persistStore(store);

@@ -1,10 +1,9 @@
 import { useId } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import PropTypes from "prop-types";
 import Styles from "./ContactForm.module.css"
 import { useDispatch,useSelector } from "react-redux";
-import { addContact,deleteContact,updateContact } from "../redux/contactsSlice";
+import { addContact} from "../redux/contactsSlice";
 
 const ContactForm = () => {
   const dispatch = useDispatch();
@@ -88,7 +87,5 @@ const ContactForm = () => {
   );
 };
 
-ContactForm.propTypes = {
-};
 
 export default ContactForm;

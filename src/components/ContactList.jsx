@@ -1,5 +1,4 @@
 import Contact from "./Contact";
-import PropTypes from "prop-types";
 import Styles from "./ContactList.module.css"
 import { useSelector, useDispatch } from "react-redux";
 import { deleteContact } from "../redux/contactsSlice";
@@ -37,7 +36,5 @@ const ContactList = () => {
   );
 };
 
-ContactList.propTypes = {
-};
 
 export default ContactList;
