@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Styles from "./SearchBox.module.css"
 import { useDispatch,useSelector } from 'react-redux';
 import { changeFilter, selectNameFilter } from '../redux/filtersSlice';
@@ -18,8 +17,5 @@ const SearchBox = () => {
     </div>
   )
 }
-
-SearchBox.propTypes={
-};
 
 export default SearchBox;
